@@ -1,0 +1,62 @@
+
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+/*
+
+.searchForm {
+	display: block;
+	margin: 0 auto;
+	clear: none;
+	height: 180px;
+	width: 990px;
+}
+
+*/
+/* 検索画面のみ　*//*
+
+h1 {
+	margin: 5px 5px 20px 5px;
+}
+
+.searchForm {
+	margin: 0 0 0 5px;
+}
+.searchForm ul {
+	list-style: none;
+}
+
+.searchForm ul li {
+	width: 990px;
+	height: 30px;
+	border: 1px solid #000000;
+}
+
+.adjacent {
+	padding: 0;
+	display: block;
+	float: left;
+	height: 100%;
+	font-size: 16px;
+}
+
+option {
+	height: 30px;
+}
+
+.label {
+	display: block;
+	float: left;
+	padding: 0;
+	margin: 0;
+	height: 98%;
+	border: 1px solid #000000;
+	background: #ecb14b;
+	margin: 0 auto;
+	font-size: 18px;
+	text-align: center;
+}
+*/
+

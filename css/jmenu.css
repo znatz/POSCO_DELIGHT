@@ -1,0 +1,119 @@
+.jMenu {
+    display: table;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width:980px;
+    height:36px;
+}
+
+.jMenu li {
+    display: table-cell;
+    background-color: #181B39;
+    box-shadow: 0 2px 1px -1px;
+    margin: 0 1px;
+    list-style: none;
+    border-right: 1px solid white;
+    border-left:  1px solid white;
+    text-align:center;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    padding-left:0;
+    padding-right: 0;
+    width:130px;
+}
+
+.jMenu li a {
+    text-decoration:none;
+    display: block;
+    background-color: transparent;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 16px;
+    text-align:center;
+}
+/*
+
+.jMenu li a:hover {
+    background-color: #181B39;
+}
+
+.jMenu li:hover > a {
+background-color: #181B39;
+}
+*/
+
+.jMenu li ul {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.jMenu li ul li {
+    background-color: #181B39;
+    display: block;
+    border-bottom: 1px solid white;
+    padding: 0;
+    list-style: none;
+    position: relative
+    width:100px;
+}
+
+.jMenu li ul li a {
+    font-size: 12px;
+    text-transform: none;
+    display: block;
+    padding: 7px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent
+    height:25px;
+    line-height: 25px;
+    width:100px;
+}
+
+.jMenu li ul li a.isParent {
+    background-color: #322f32;
+}
+
+.jMenu li ul li a:hover {
+/*    background-color: #514c52;*/
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.jMenu li:hover, .jMenu li a:hover {
+	background: #F49E95; /*#FDAB07;*/
+	color:black;
+    -moz-osx-font-smoothing: grayscale;
+    border-radius: 10px;
+}
+
+.jMenu li a.top_title {
+    height:25px;
+    line-height: 25px;
+}
+/* Bounce In */
+.hvr-bounce-in {
+  /*display: inline-block;*/
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.hvr-bounce-in:hover, .hvr-bounce-in:focus, .hvr-bounce-in:active {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+/* End of Bounce In */
+

@@ -1,0 +1,300 @@
+/* テストスタイル : 開始　
+div:empty, span:empty, li:empty, p:empty, td:empty, th:empty {
+	padding: 0.5em;
+	background: yellow;
+}
+
+*[style], font, center {
+	outline: 5px solid red;
+}
+
+*[class=""], *[id=""] {
+	outline: 5px dotted red;
+}
+
+img[alt=""] {
+	border: 3px dotted red;
+}
+
+img:not ([alt] ) {
+	border: 5px solid red;
+}
+
+img[title=""] {
+	outline: 3px dotted fuchsia;
+}
+
+img:not ([title] ) {
+	outline: 5px solid fuchsia;
+}
+
+table:not ([summary] ) {
+	outline: 5px solid red;
+}
+
+table[summary=""] {
+	outline: 3px dotted red;
+}
+
+th {
+	border: 2px solid red;
+}
+
+th[scope="col"], th[scope="row"] {
+	border: none;
+}
+
+a[href]:not ([title] ) {
+	border: 5px solid red;
+}
+
+a[title=""] {
+	outline: 3px dotted red;
+}
+
+a[href="#"] {
+	background: lime;
+}
+
+a[href=""] {
+	background: fuchsia;
+}
+/* テストスタイル : 終了　*/
+
+/*	リセットスタイル　：　開始　*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+	blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, hgroup, menu, nav,
+	output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/*	リセットスタイル　：　終了　*/
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+.blended_grid {
+	display: block;
+	width: 1000px;
+	overflow: auto;
+	margin: 5px auto 0 auto;
+	border-left: 1px solid #BFBFBF;
+	border: 5px solid white;
+	position: relative;
+	box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.80);
+	-moz-box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.80);
+	-webkit-box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.80);
+	border-radius: 10px;
+}
+
+.pageHeader {
+	float: left;
+	clear: none;
+	height: 90px;
+	width: 1000px;
+	font-family: Verdana;
+	font-size: 12px;
+}
+
+.pageContent {
+	float: left;
+	clear: none;
+	height: 800px;
+	width: 1000px;
+	overflow-x: hidden;
+	background-color: #eeeeee;
+}
+
+.pageFooter {
+	float: left;
+	clear: none;
+	height: 30px;
+	width: 1000px;
+	overflow: hidden;
+	background: #ffffff;
+	border: 1px solid #31637d;
+	background: #ffffff;
+	text-align: center;
+	margin: 0 auto;
+	/* Old browsers */
+	background: -moz-linear-gradient(top, #ffffff 0%, #31637d 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff),
+		color-stop(100%, #31637d));
+	/* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%, #31637d 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%, #31637d 100%);
+	/* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%, #31637d 100%);
+	/* IE10+ */
+	background: linear-gradient(to bottom, #ffffff 0%, #31637d 100%);
+	/* W3C */
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',
+		endColorstr='#31637d', GradientType=0);
+	/* IE6-9 */
+}
+/* トップ右　*/
+div.top_left_info_up {
+	margin: 30px 10px 5px 10px;
+	float: top;
+	font-size: 16px;
+}
+
+div.top_left_info_down {
+	margin: 0px 0 10px 10px;
+	float: top;
+	font-size: 16px;
+}
+
+div.top_right_info_up {
+	float: left;
+	margin: 0 3px 5px 3px;
+	font-size: 13px;
+}
+
+div.top_right_info_down {
+	float: right;
+	margin: 0 3px 8px 3px;
+	font-size: 16px;
+}
+/* メニュー */
+/* Bounce In */
+.hvr-bounce-in {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.hvr-bounce-in:hover, .hvr-bounce-in:focus, .hvr-bounce-in:active {
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+  -webkit-transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+  transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
+}
+
+/* End of Bounce In */
+
+
+div ul li {
+	box-shadow: 0 2px 1px -1px;
+}
+
+ul {
+	margin-left: 0;
+	padding-left: 0;
+	list-style-type: none;
+	/*width: 1000px;*/
+	/*border-left: 1px solid #cccccc;*/
+}
+
+li {
+	float: left;
+	width: 125px;
+	border-bottom: 1px solid #cccccc;
+}
+
+li a {
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-right: 1px solid #cccccc;
+	text-align: center;
+	text-decoration: none;
+	/*background-color: #48607B;*/
+	border-radius: 5px;
+	background:
+		url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzQ0NWQ3OCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzZmNzg4NCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjU1JSIgc3RvcC1jb2xvcj0iIzRkNWM3NyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0ZDVjNzciIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, #445d78 0%, #6f7884 50%, #4d5c77 55%, #4d5c77
+		100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #445d78),
+		color-stop(50%, #6f7884), color-stop(55%, #4d5c77),
+		color-stop(100%, #4d5c77));
+	background: -webkit-linear-gradient(top, #445d78 0%, #6f7884 50%, #4d5c77 55%,
+		#4d5c77 100%);
+	background: -o-linear-gradient(top, #445d78 0%, #6f7884 50%, #4d5c77 55%, #4d5c77
+		100%);
+	background: -ms-linear-gradient(top, #445d78 0%, #6f7884 50%, #4d5c77 55%, #4d5c77
+		100%);
+	background: linear-gradient(to bottom, #445d78 0%, #6f7884 50%, #4d5c77 55%, #4d5c77
+		100%);
+	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#445d78',
+		endColorstr='#4d5c77', GradientType=0);
+	color: #FFF;
+	width: 98%;
+	font-family: Verdana;
+	-webkit-transition: all 1s ease;
+	-moz-transition: all 1s ease;
+	-o-transition: all 1s ease;
+	transition: all 1s ease;
+}
+
+a:hover {
+	background: #AA4639;
+}
+/*ドロップダウンメニュー*/
+ul ul {
+	position: absolute;
+	display: none;
+}
+
+li:hover ul, li:target ul {
+	display: block;
+}
+
+ul:target {
+	float: none;
+	display: block;
+}
+
+li:hover ul li, li:target ul li {
+	float: none;
+	display: block;
+}
+
+li ul li a {
+	font-size: 12px;
+}
