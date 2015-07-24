@@ -70,7 +70,6 @@ if (isset($_POST["submit"])) {
         $successMessage = "追加しました。";
     } else {
         // 更新処理開始
-        if (mysql_errno() == 1062) {
             if (Priceband::update_one_priceband($_POST['chrID'],
                 $_POST['chrName'],
                 $_POST['intUnder_Bound'],
@@ -78,7 +77,6 @@ if (isset($_POST["submit"])) {
             ) {
                 $successMessage = "更新しました。";
             };
-        }
     }
 
     // 再度リストを更新

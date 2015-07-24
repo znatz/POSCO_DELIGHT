@@ -67,7 +67,6 @@ if (isset($_POST["submit"])) {
         $successMessage = "追加しました。";
     } else {
         // 更新処理開始
-        if (mysql_errno() == 1062) {
             if (Group::update_one_group($_POST['chrID'],
                 $_POST['chrName'],
                 $_POST['intCost_Rate'],
@@ -76,7 +75,6 @@ if (isset($_POST["submit"])) {
             ) {
                 $successMessage = "更新しました。";
             };
-        }
     }
 
     // 再度リストを更新

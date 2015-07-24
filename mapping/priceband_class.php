@@ -1,111 +1,57 @@
 <?php
 
-require_once dirname(__FILE__).'/../utils/helper.php';
-require_once dirname(__FILE__).'/../utils/connect.php';
+require_once 'helper.php';
+require_once 'connect.php';
+require_once 'ZModel.php';
 
-class Priceband {
-    public $chrID;
-    public $chrName;
-    public $intUnder_Bound;
-    public $intUpper_Bound;
-    function Priceband($id="", $name="", $under="", $upper="") {
-        $this->chrID = $id;
-        $this->chrName = $name;
-        $this->intUnder_Bound = $under;
-        $this->intUpper_Bound = $upper;
+class Priceband extends ZModel{
+
+    protected static $table = 'priceband';
+    protected $props = [ 'chrID', 'chrName', 'intUnder_Bound', 'intUpper_Bound'];
+    protected static $columns = [ 'chrID', 'chrName', 'intUnder_Bound', 'intUpper_Bound'];
+
+    function Priceband() {
+        $parameters = func_get_args();
+        foreach ($parameters as $p) {
+            $key = array_shift($this->props);
+            $this->$key = $p;
+        }
     }
 
     public static function get_one_empty_priceband() {
-        return new Priceband("", "", "", "");
+        return new Priceband();
     }
 
     public static function get_all_priceband() {
-        $connection = new Connection();
-        $query = "SELECT * FROM `priceband` ;";
-        $result = $connection->result($query);
-        while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-            $contents[] = new Priceband($row['chrID'], $row['chrName'], $row['intUnder_Bound'], $row['intUpper_Bound']);
-        }
-        return $contents;
+        return parent::get_all();
     }
 
     public static function get_all_priceband_chrID() {
-        $connection = new Connection();
-        $query = "SELECT `chrID` FROM `priceband` ORDER BY `chrID`;";
-        $result = $connection->result($query);
-        echo mysql_error();
-        while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-            $contents[] = $row['chrID'];
-        }
-        $connection->close();
-        return $contents;
+        return parent::get_column('chrID');
     }
 
     public static function get_one_priceband($chrID) {
-        $connection = new Connection();
-        $query = "SELECT * FROM `priceband` WHERE `chrID`=".$chrID.";";
-        $result = $connection->result($query);
-        $row = mysql_fetch_array($result, MYSQL_ASSOC);
-        $contents = new Priceband($row['chrID'],
-                                    $row['chrName'],
-                                    $row['intUnder_Bound'],
-                                    $row['intUpper_Bound']);
-        $connection->close();
-        return $contents;
+        return parent::find($chrID);
 
     }
 
-    public static function insert_one_priceband($id, $name, $under, $upper) {
-        $connection = new Connection();
-        $query = <<<SQL
-INSERT INTO `priceband` (`chrID`,
-                    `chrName`,
-                    `intUnder_Bound`,
-                    `intUpper_Bound`)
-VALUES ('$id', '$name', '$under', '$upper');
-SQL;
-        $result = $connection->result($query);
-        return $result;
-
+    public static function insert_one_priceband() {
+        return parent::insert_values(func_get_args());
     }
 
-    public static function update_one_priceband($id, $name, $under, $upper) {
-        $connection = new Connection();
-        $query = <<<EOF
-UPDATE `priceband` SET `chrName`='$name', `intUnder_Bound`='$under', `intUpper_Bound`='$upper'
-WHERE `chrID`='$id';
-EOF;
-        $result = $connection->result($query);
-        $connection->close();
-        return $result;
-
+    public static function update_one_priceband() {
+        return parent::update_to_columns(func_get_args());
     }
 
     public static function delete_one_priceband($chrID) {
-        $connection = new Connection();
-        $query = "DELETE FROM `priceband` WHERE `chrID`=".$chrID.";";
-        $result = $connection->result($query);
-        echo mysql_error();
-        $connection->close();
-        return $result;
-
+        return parent::delete($chrID);
     }
 
     public static function get_new_priceband() {
-        $id = get_lastet_number(self::get_all_priceband_chrID());
-        $result = new Priceband($id,"","","","");
-        return $result;
+        return new Priceband(get_lastet_number(parent::get_column('chrID')));
     }
 
     public static function get_distinct_priceband_chrID() {
-        $connection = new Connection();
-        $query = "SELECT DISTINCT `chrID` FROM `priceband` ORDER BY `chrID`;";
-        $result = $connection->result($query);
-        echo mysql_error();
-        while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-            $contents[] = $row['chrID'];
-        }
-        $connection->close();
-        return $contents;
+        return parent::get_distinct_column('chrID');
     }
 }

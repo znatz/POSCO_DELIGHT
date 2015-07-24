@@ -115,19 +115,6 @@ EOF;
     }
 
     public static function get_new_shop() {
-//        $connection = new Connection();
-//        $query = "SELECT `chrID` FROM `shop` Where `chrID` >'00' ORDER BY `chrID` DESC LIMIT 0, 1;";
-//        $result = $connection->result($query);
-//        $row = mysql_fetch_array($result, MYSQL_ASSOC);
-//	if ( is_null($row['chrID']) ) {
-//		$row['chrID']="01";
-//	} else {
-//		$row['chrID']=str_pad(intval($row['chrID'])+1, 2, "0", STR_PAD_LEFT);
-//	}
-//        $result = new Shop($row['chrID'],"","","","","","","");
-//        $connection->close();
-//        return $result;
-//
         $id = get_lastet_number(self::get_all_shop_chrID());
         $result = new Shop($id,"","","","","","");
         return $result;

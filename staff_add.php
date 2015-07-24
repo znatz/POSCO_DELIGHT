@@ -196,7 +196,7 @@ if (isset($_POST["submit"])) {
                             class="loginid validate[required,custom[onlyLetterNumber],maxSize[6]] text-input"
                             data-prompt-position="topLeft:140" name="chrLogin_ID"
                             value="<?
-                            echo $targetStaff->chrLoginID;
+                            echo $targetStaff->chrLogin_ID;
                             ?>"/>
                     </p>
 
@@ -239,8 +239,7 @@ if (isset($_POST["submit"])) {
 
         <!-- ********************* リストの作成 開始　**********************	-->
         <div id="user_list" style="width:700px;margin:0 auto; text-align:center;">
-            <form method="post" id="list" action="">
-                <?
+            <?
                 $header = [
                     "コード" => 80,
                     "担当" => 200,
@@ -249,32 +248,14 @@ if (isset($_POST["submit"])) {
                     "選択" => 50,
                     "削除" => 70
                 ];
-                echo '<table id="myTable" style="table-layout:fixed;border:0;margin:0;padding:0;border-radius:5px;width:700px;" class="search_table tablesorter">';
-                echo '<thead><tr>';
-                foreach ($header as $name => $width)
-                    echo '<th width="' . $width . '">' . $name . '</th>';
-                echo '</tr></thead><tbody>';
-
-
-                foreach ((array)$contents as $row) {
-                    echo '<tr class="not_header" id="' . $row->chrID . '">';
-                    echo '<td width="100px;">' . $row->chrID . '</td>';
-                    echo '<td width="200px;">' . $row->chrName . '</td>';
-                    echo '<td width="150px;">' . $row->chrLoginID . '</td>';
-                    echo '<td width="50pxx;">' . $row->intAuthority_ID . '</td>';
-                    echo '<td style="width:52px;text-align:center;"><input type="radio" onclick="javascript: submit()" name="targetID" id="targetID" value="' . $row->chrID . '"/></td>';
-                    echo '<td style="width:65px;padding:0 0 0 2px;"><button onClick="if(!confirm(\'削除しますか？\')){return false;}"  class="center_button hvr-fade delete_button" style="width:65px; height:30px; margin:0;padding:0;font-weight:normal;" type="submit" name="delete" value="' . $row->chrID . '">削除</button></td>';
-                    echo '</tr>';
-                }
-                echo '</tbody></table>';
-
-                $_SESSION["sheet"] = serialize($contents);
-                array_pop($header);
-                array_pop($header);
-                $_SESSION["sheet_header"] = array_keys($header);
-                ?>
-                <input type="submit" name="target" style="display: none"/>
-            </form>
+                $prop = [
+                    'chrID'=>'center',
+                    'chrName'=>'left',
+                    'chrLogin_ID'=>"center",
+                    'intAuthority_ID'=>'center'
+                ];
+                get_list($header, $contents, "chrID", $prop, "700px") ;
+            ?>
         </div>
     </div>
     <!-- ********************* リストの作成  終了　********************** -->

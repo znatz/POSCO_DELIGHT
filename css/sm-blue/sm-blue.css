@@ -21,7 +21,7 @@
   background-image: -o-linear-gradient(to bottom, #3b9fce, #2b82ac);
   background-image: linear-gradient(to bottom, #3b9fce, #2b82ac);
   color: white;
-  font-family: "PT Sans Narrow", "Arial Narrow", Arial, Helvetica, sans-serif;
+  /*font-family: "PT Sans Narrow", "Arial Narrow", Arial, Helvetica, sans-serif;*/
   /*font-size: 18px;*/
     /*menu font size*/
     font-size: 14px;

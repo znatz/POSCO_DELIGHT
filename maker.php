@@ -66,14 +66,12 @@ if (isset($_POST["submit"])) {
         $successMessage = "追加しました。";
     } else {
         // 更新処理開始
-        if (mysql_errno() == 1062) {
             if (Maker::update_one_maker($pad_id,
                 $_POST['chrName'],
                 $_POST['chrShortName'])
             ) {
                 $successMessage = "更新しました。";
             };
-        }
     }
 
     // 再度リストを更新

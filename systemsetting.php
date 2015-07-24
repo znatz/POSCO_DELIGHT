@@ -58,6 +58,7 @@ EOF;
 	$connection = new Connection();
 	$connection->result($query);
 	$connection->close();
+        $successMessage = "更新しました。";
 	
 }
 
@@ -273,7 +274,7 @@ if (isset($_POST['SearchPost'])) {
                     <p class="list">
                         <label class="list">会社名</label><input
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
-                            class="validate[required,maxSize[30]] text-input"
+                            class="validate[required,maxSize[25]] text-input"
                             data-prompt-position="topLeft:140" name="chrCompanyName"
                             value="<?php
                             echo $targetSystemsetting->chrCompanyName;

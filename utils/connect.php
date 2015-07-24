@@ -1,6 +1,7 @@
 <?php
 
 require_once 'ConstantDb.php';
+require_once 'helper.php';
 
 class Connection {
 	public $link; 
@@ -24,7 +25,8 @@ class Connection {
 		if(mysql_error()) return null;
 		return $result;
 	}
-	
+
+
 	public function close() {
 		mysql_close($this->link);
 	}
@@ -33,14 +35,35 @@ class Connection {
         $conn = new Connection();
         return $conn->result($query);
     }
-
     public static function get_all_from_table($table_name) {
+        require_once $table_name.'_class.php';
+        $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS,DB_NAME);
+        mysqli_set_charset($connection, "utf8");
+
         $query = "SELECT * FROM ".strtolower($table_name);
-        $result = self::go_query($query);
-        while ($row = mysql_fetch_object($result, $table_name)) {
-            $contents[] = $row;
+        $result = mysqli_query($connection, $query);
+        $contents = array();
+
+        if(mysqli_num_rows($result) == 1) {
+            $row = mysqli_fetch_assoc($result);
+             $keys = array_keys($row);
+            $obj = new $table_name;
+            foreach ($keys as $k) {
+                    $obj->$k = $row[$k];
+            }
+            return $obj;
+        };
+
+        while ($row = mysqli_fetch_array($result,MYSQLI_ASSOC)) {
+
+            $keys = array_keys($row);
+            $obj = new $table_name;
+            foreach ($keys as $k) {
+                    $obj->$k = $row[$k];
+            }
+            $contents[] = $obj;
         }
-        print_r($contents);
+        $connection->close();
         return $contents;
     }
 }

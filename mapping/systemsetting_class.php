@@ -16,41 +16,36 @@ class Systemsetting
     public $chrInvoiceComment1;
     public $chrInvoiceComment2;
     public $chrInvoiceComment3;
-    function Systemsetting($id, $rate, $round, $company="", $post="", $address="", $addressno="", $tel="", $fax="", $comment1="", $comment2="", $comment3="")
+
+    function Systemsetting($id = "", $rate = "", $round = "", $company = "", $post = "", $address = "", $addressno = "", $tel = "", $fax = "", $comment1 = "", $comment2 = "", $comment3 = "")
     {
-	$this-> chrID = $id;
-	$this-> intRate = $rate;
-	$this-> intRoundType = $round;
-	$this-> chrCompanyName = $company;
-	$this-> chrPost = $post;
-	$this-> chrAddress = $address;
-	$this-> chrAddressNo = $addressno;
-	$this-> chrTel = $tel;
-	$this-> chrFax = $fax;
-	$this-> chrInvoiceComment1 = $comment1;
-	$this-> chrInvoiceComment2 = $comment2;
-	$this-> chrInvoiceComment3 = $comment3;
+        $this->chrID = $id;
+        $this->intRate = $rate;
+        $this->intRoundType = $round;
+        $this->chrCompanyName = $company;
+        $this->chrPost = $post;
+        $this->chrAddress = $address;
+        $this->chrAddressNo = $addressno;
+        $this->chrTel = $tel;
+        $this->chrFax = $fax;
+        $this->chrInvoiceComment1 = $comment1;
+        $this->chrInvoiceComment2 = $comment2;
+        $this->chrInvoiceComment3 = $comment3;
     }
 
     public static function get_all_systemsetting()
     {
-        $connection = new Connection();
-        $query = "select * from systemsetting";
-        
-        $result = $connection->result($query) or die("SQL Error 1: " . mysql_error());
-	$row = mysql_fetch_array($result, MYSQL_ASSOC);
-	$contents = new Systemsetting($row['chrID'], $row['intRate'], $row['intRoundType'], $row['chrCompanyName'], $row['chrPost'], $row['chrAddress'], $row['chrAddressNo'], $row['chrTel'], $row['chrFax'], $row['chrInvoiceComment1'], $row['chrInvoiceComment2'], $row['chrInvoiceComment3']);
-	$connection->close();
-        return $contents;
+       return Connection::get_all_from_table('systemsetting');
     }
-     public static function get_companyname_from_chrID($id)
+
+    public static function get_companyname_from_chrID($id)
     {
         $connection = new Connection();
-        $query = "SELECT chrCompanyName FROM systemsetting WHERE chrID=".$id;
+        $query = "SELECT chrCompanyName FROM systemsetting WHERE chrID=" . $id;
 
         $result = $connection->result($query) or die("SQL Error 1: " . mysql_error());
-	    $row = mysql_fetch_array($result, MYSQL_ASSOC);
-	    $connection->close();
+        $row = mysql_fetch_array($result, MYSQL_ASSOC);
+        $connection->close();
         return $row['chrCompanyName'];
     }
 
@@ -62,7 +57,7 @@ class Systemsetting
 
         $result = $connection->result($query) or die("SQL Error 1: " . mysql_error());
         $row = mysql_fetch_array($result, MYSQL_ASSOC);
-        $connection ->close();
+        $connection->close();
         return array($row['chrID'], $row['chrCompanyName']);
     }
 

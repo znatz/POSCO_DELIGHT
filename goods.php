@@ -6,6 +6,11 @@ require_once './mapping/staff_class.php';
 require_once './utils/html_parts_generator.php';
 require_once './utils/helper.php';
 require_once './mapping/menu_class.php';
+require_once 'group_class.php';
+require_once 'goods_class.php';
+require_once 'seller_class.php';
+require_once 'maker_class.php';
+require_once 'unit_class.php';
 
 
 session_start();
@@ -15,6 +20,8 @@ global $successMessage;
 $errorMessage = "";
 $successMessage = "";
 $targetGoods = Goods::get_one_empty_goods();;
+
+extract($_POST);
 
 // ログイン状態チェック
 if (!isset($_SESSION['staff']))
@@ -76,7 +83,6 @@ if (isset($_POST["submit"])) {
         $successMessage = "追加しました。";
     } else {
         // 更新処理開始
-        if (mysql_errno() == 1062) {
             if (Goods::update_one_goods($_POST['chrID'],
  	        $_POST['chrClass_ID'],
         	$_POST['chrCode'],
@@ -95,7 +101,6 @@ if (isset($_POST["submit"])) {
             ) {
                 $successMessage = "更新しました。";
             };
-        }
     }
 
     // 再度リストを更新
@@ -103,12 +108,17 @@ if (isset($_POST["submit"])) {
     $_POST["targetID"] = $chrID;
 }
 
+$groups = Group::get_distinct_group_chrID();
+$sellers = Seller::get_all_seller();
+$makers = Maker::get_all_maker();
+$units = Unit::get_all_unit();
+
 $contents = Goods::get_all_goods();
 ?>
 
 <!DOCTYPE html>
 <head>
-    <?php include('./html_parts/css_and_js.html'); ?>
+    <? include('./html_parts/css_and_js.html'); ?>
 
     <script type="text/javascript">
         jQuery(document).ready(function () {
@@ -183,13 +193,7 @@ $contents = Goods::get_all_goods();
     <title>POSCO</title>
     <meta name="description" content="POSCO">
     <style type="text/css">
-        * {
-            font-family: Verdana;
-        }
 
-        input {
-            border: 1px solid #000000;
-        }
 
         input[type="text"], input[type="password"], select {
             padding: 0 0 0 5px;
@@ -237,7 +241,6 @@ $contents = Goods::get_all_goods();
             background: #ffffff;
             border-bottom: solid 1px #FDAB07;
         }
-
         label.list {
             display: block;
             float: left;
@@ -248,28 +251,17 @@ $contents = Goods::get_all_goods();
             font-size: 14px;
         }
 
-        button {
-            background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#c2c2c2));
-            background-image: -webkit-linear-gradient(top, #FFFFFF, #c2c2c2);
-            background-image: -moz-linear-gradient(top, #FFFFFF, #c2c2c2);
-            background-image: -ms-linear-gradient(top, #FFFFFF, #c2c2c2);
-            background-image: -o-linear-gradient(top, #FFFFFF, #c2c2c2);
-            background-image: linear-gradient(to bottom, #FFFFFF, #c2c2c2);
-            filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#FFFFFF, endColorstr=#c2c2c2);
-        }
-
-
     </style>
 </head>
 <body>
 <div class="blended_grid">
     <div class="pageHeader">
-        <?php include('./html_parts/header.html'); ?>
+        <? include('./html_parts/header.html'); ?>
     </div>
     <div class="pageContent">
-        <?php include('./html_parts/top_menu.html'); ?>
+        <? include('./html_parts/top_menu.html'); ?>
         <div class="main">
-            <?php include('./html_parts/warning.html'); ?>
+            <? include('./html_parts/warning.html'); ?>
 
             <!-- ********************* マスタの作成 開始　**********************	-->
             <div style="clear: both; float: top;">
@@ -286,7 +278,7 @@ $contents = Goods::get_all_goods();
                             data-prompt-position="topLeft:140"
                             style="width: 290px; margin: 0 0 0 18px;" name="chrID"
                             type="text" size="10" placeholder="0000000000000"
-                            value='<?php
+                            value='<?
                             echo $targetGoods->chrID;
                             ?>'/>
                         <input class="newID hvr-fade"
@@ -297,13 +289,14 @@ $contents = Goods::get_all_goods();
                     <p class="list">
                         <label class="list">商品区分</label>
                         <select name="chrClass_ID" style="float:left;height:37px;width:150px;">
-                            <?php foreach ($classids as $c) : ?>
+                            <option/>
+                            <? foreach ($classids as $c) : ?>
                                 <option 
 				<? if (mb_substr($c,0,1,"UTF-8") == $targetGoods->chrClass_ID) { ?>
 					selected 
 				<? } ?>
-				value="<?php echo $c ?>"><?php echo $c ?></option>
-                            <?php endforeach; ?>
+				value="<? echo $c ?>"><? echo $c ?></option>
+                            <? endforeach; ?>
                         </select>
                     </p>
 
@@ -312,7 +305,7 @@ $contents = Goods::get_all_goods();
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[30]] text-input"
                             data-prompt-position="topLeft:140" name="chrCode"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrCode;
                             ?>"/>
                     </p>
@@ -321,7 +314,7 @@ $contents = Goods::get_all_goods();
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[50]] text-input"
                             data-prompt-position="topLeft:140" name="chrName"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrName;
                             ?>"/>
                     </p>
@@ -330,53 +323,85 @@ $contents = Goods::get_all_goods();
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[50]] text-input"
                             data-prompt-position="topLeft:140" name="chrKana"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrKana;
                             ?>"/>
                     </p>
                     <p class="list">
-                        <label class="list">仕入先</label><input
-                            style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
-                            class="validate[required,maxSize[3]] text-input" id="ref_seller"
-                            data-prompt-position="topLeft:140" name="chrSeller_ID onblur="blurA(this);""
-                            value="<?php
-                            echo $targetGoods->chrSeller_ID;
-                            ?>"/>
+                        <label class="list">仕入先</label>
+
+
+                        <select
+                            style="width:397px;"
+                            tabindex="1"
+                            name="chrSeller_ID" >
+                            <option/>
+                            <? foreach ($sellers as $s) : ?>
+                                <option
+                                    value="<? echo $s->chrID; ?>"
+                                    <? if ($s->chrID == $targetGoods->chrSeller_ID) echo "selected"; ?>
+                                    ><? echo $s->chrID.'_'.$s->chrName; ?>
+                                </option>
+                            <? endforeach; ?>
+                        </select>
+
+
                         <a class="center_button hvr-fade" style="margin:0 auto;float:right;width:80px;" id="right-menu-seller" href="#sidr">仕入れリスト</a>
                     </p>
                     <p class="list">
-                        <label class="list">メーカー</label><input
-                            style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
-                            class="validate[required,maxSize[3]] text-input"
-                            data-prompt-position="topLeft:140" name="chrMaker_ID"
-                            value="<?php
-                            echo $targetGoods->chrMaker_ID;
-                            ?>"/>
+                        <label class="list">メーカー</label>
+                        <select
+                            style="width:397px;"
+                            tabindex="2"
+                            name="chrMaker_ID" >
+                            <option/>
+                            <? foreach ($makers as $m) : ?>
+                                <option
+                                    value="<? echo $m->chrID; ?>"
+                                    <? if ($m->chrID == $targetGoods->chrMaker_ID) echo "selected"; ?>
+                                    ><? echo $m->chrID.' '.$m->chrName; ?></option>
+                            <? endforeach; ?>
+                        </select>
+
                     </p>
                     <p class="list">
-                        <label class="list">部門</label><input
-                            style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
-                            class="validate[required,maxSize[2]] text-input"
-                            data-prompt-position="topLeft:140" name="chrGroup_ID"
-                            value="<?php
-                            echo $targetGoods->chrGroup_ID;
-                            ?>"/>
+                        <label class="list">部門</label>
+
+                        <select
+                            tabindex="3"
+                            name="chrGroup_ID" style="width:397px;">
+                            <option/>
+                            <? foreach ($groups as $g) : ?>
+                                <option
+                                    value="<? echo $g[0] ?>"
+                                    <? if ($g[0] == $targetGoods->chrGroup_ID) echo "selected"; ?>
+                                    ><? echo $g[0] . " " . $g[1]; ?></option>
+                            <? endforeach; ?>
+                        </select>
+
+
                     </p>
                     <p class="list">
-                        <label class="list">品種</label><input
-                            style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
-                            class="validate[required,maxSize[2]] text-input"
-                            data-prompt-position="topLeft:140" name="chrUnit_ID"
-                            value="<?php
-                            echo $targetGoods->chrUnit_ID;
-                            ?>"/>
-                    </p>
+                        <label class="list">品種</label>
+                        <select
+                            style="width:397px;"
+                            tabindex="2"
+                            name="chrUnit_ID" >
+                            <option/>
+                            <? foreach ($units as $u) : ?>
+                                <option
+                                    value="<? echo $u->chrID; ?>"
+                                    <? if ($u->chrID == $targetGoods->chrUnit_ID) echo "selected"; ?>
+                                    ><? echo $u->chrID.' '.$u->chrName; ?></option>
+                            <? endforeach; ?>
+                        </select>
+                   </p>
                     <p class="list">
                         <label class="list">カラー</label><input
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[20]] text-input"
                             data-prompt-position="topLeft:140" name="chrColor"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrColor;
                             ?>"/>
                     </p>
@@ -385,7 +410,7 @@ $contents = Goods::get_all_goods();
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[20]] text-input"
                             data-prompt-position="topLeft:140" name="chrSize"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrSize;
                             ?>"/>
                     </p>
@@ -394,7 +419,7 @@ $contents = Goods::get_all_goods();
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[50]] text-input"
                             data-prompt-position="topLeft:140" name="chrComment1"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrComment1;
                             ?>"/>
                     </p>
@@ -403,7 +428,7 @@ $contents = Goods::get_all_goods();
                             style="width: 390px; margin: 0 0 0 18px;" type="text" size="10"
                             class="validate[required,maxSize[50]] text-input"
                             data-prompt-position="topLeft:140" name="chrComment2"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->chrComment2;
                             ?>"/>
                     </p>
@@ -412,7 +437,7 @@ $contents = Goods::get_all_goods();
                             style="width: 150px; margin: 0 0 0 18px;text-align:right;" type="text" size="10"
                             class="validate[required,onlyNumberSp,maxSize[7]] text-input"
                             data-prompt-position="topLeft:140" name="intCost"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->intCost;
                             ?>"/>
                     </p>
@@ -421,7 +446,7 @@ $contents = Goods::get_all_goods();
                             style="width: 150px; margin: 0 0 0 18px;text-align:right;" type="text" size="10"
                             class="validate[required,onlyNumberSp,maxSize[7]] text-input"
                             data-prompt-position="topLeft:140" name="intPrice"
-                            value="<?php
+                            value="<?
                             echo $targetGoods->intPrice;
                             ?>"/>
                     </p>
@@ -429,8 +454,11 @@ $contents = Goods::get_all_goods();
                        id="buttonlist">
                         <input class="center_button hvr-fade" type="submit" name="submit"
                                size="10" value="登録"/>
-                        <input class="center_button hvr-fade"
-                               type="reset" size="10" value="クリア"/><a class="center_button hvr-fade" href="./index.php"
+                        <a
+                            tabindex="6"
+                            class="center_button hvr-fade" href="./goods.php"
+                            style="display: block; float:left;text-decoration: none; ; margin: 30px 5px; font-size: 14px; padding: 12px 0 12px 0;">クリア</a>
+                        <a class="center_button hvr-fade" href="./index.php"
                                                                       style="display: block; float:left;text-decoration: none; width: 88px; margin: 30px 5px; font-size: 14px; padding: 12px 0 12px 0;">戻る</a>
                     </p>
 
@@ -452,9 +480,9 @@ $contents = Goods::get_all_goods();
 
 
         <!-- ********************* リストの作成 開始　**********************	-->
-        <div id="user_list" style="overflow:auto !important;">
+        <div id="user_list" style="overflow:auto !important;margin:0 0 0 70px !important;width:1000px !important;">
             <form method="post" id="list" action="">
-                <?php
+                <?
                 $header = [
                     "コード" => 50,
                     "商品区分" => 100,
@@ -475,52 +503,37 @@ $contents = Goods::get_all_goods();
                     "削除" => 70
                 ];
 
-                echo '<table id="myTable" style="width:1500px;border:0; padding:0;border-radius:5px;" class="search_table tablesorter">';
-                echo '<thead><tr>';
-                foreach ($header as $name => $width)
-                    echo '<th width="' . $width . '">' . $name . '</th>';
-                echo '</tr></thead><tbody>';
+                $prop = [
+                    'chrID'         =>'center',
+                    'chrClass_ID'   =>'center',
+                    'chrCode'       =>'left',
+                    'chrName'       =>'left',
+                    'chrKana'       =>'left',
+                    'chrSeller_ID'  =>'center',
+                    'chrMaker_ID'   =>'center',
+                    'chrGroup_ID'   =>'center',
+                    'chrUnit_ID'    =>'center',
+                    'chrColor'      =>'left',
+                    'chrSize'       =>'left',
+                    'chrComment1'   =>'left',
+                    'chrComment2'   =>'left',
+                    'intCost'       =>'right',
+                    'intPrice'      =>'right',
+                ];
+                get_list($header, $contents, "chrID", $prop, "1500px") ;
 
-
-                foreach ((array)$contents as $row) {
-                    echo '<tr class="not_header" id="'.$row->chrID.'">';
-                    echo '<td  style="text-align:center;">' . $row->chrID . '</td>';
-                    echo '<td  style="text-align:center;">' . $row->chrClass_ID . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrCode . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrName . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrKana . '</td>';
-                    echo '<td  style="text-align:center;">' . $row->chrSeller_ID . '</td>';
-                    echo '<td  style="text-align:center;">' . $row->chrMaker_ID . '</td>';
-                    echo '<td  style="text-align:center;">' . $row->chrGroup_ID . '</td>';
-                    echo '<td  style="text-align:center;">' . $row->chrUnit_ID . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrColor . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrSize . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrComment1 . '</td>';
-                    echo '<td  style="text-align:left;">' . $row->chrComment2 . '</td>';
-                    echo '<td  style="text-align:right;">' . $row->intCost . '</td>';
-                    echo '<td  style="text-align:right;">' . $row->intPrice . '</td>';
-                    echo '<td style="width:52px;text-align:center;"><input type="radio" onclick="javascript: submit()" name="targetID" id="targetID" value="' . $row->chrID . '"/></td>';
-                    echo '<td style="width:70px;padding:2px;"><button class="center_button hvr-fade delete_button" style="width:65px; height:25px; margin:0;padding:0;font-weight:normal;" type="submit" name="delete" value="' . $row->chrID .'">削除</button></td>';
-                    echo '</tr>';
-                }
-                echo '</tbody></table>';
-
-                $_SESSION["sheet"] = serialize($contents);
                 ?>
                 <input type="submit" name="target" style="display: none"/>
             </form>
         </div>
     </div>
     <!-- ********************* リストの作成  終了　********************** -->
-    <div class="pageFooter">
-        <h4 style="color: #ffffff; text-align: center; padding: 4px 0 0 0;">CopyRight
-            2015 POSCO Co.Ltd All Rights Reserved</h4>
-    </div>
+    <? include('./html_parts/footer.html'); ?>
 </div>
 </div>
 <!-- ********************  入力規則　開始      *********************** -->
 <div id="sidr-right">
-    <?php
+    <?
     $connection = new Connection();
     $query = 'SELECT txtInstruction FROM form_helper WHERE chrPageName="goods";';
     $result = $connection->result($query);
