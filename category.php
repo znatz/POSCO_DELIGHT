@@ -67,7 +67,7 @@ if (isset($_POST["submit"])) {
     }
 
     // 再度リストを更新
-    $contents = Category::get_all_category();
+    $contents = Category::get_all();
     $_POST["targetID"] = $chrID;
 }
 
