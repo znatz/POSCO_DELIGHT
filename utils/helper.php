@@ -3,6 +3,9 @@
 require_once 'connect.php';
 require_once 'ConstantDb.php';
 
+function __autoload($class_name) {
+    require_once strtolower($class_name).'_class.php';
+}
 function prefix_ifNotEmpty($prefix, $a)
 {
     if (!empty($a)) return $prefix . $a;
