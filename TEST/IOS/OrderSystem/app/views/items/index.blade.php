@@ -77,7 +77,7 @@
                 <td>{{$item->genka}}</td>
                 <td>{{$item->Bumon}}</td>
                 <td>{{$item->Kosu}}</td>
-                <td class="col-md-1"><a href="#" class="pop"><img id="imageresource" src='./item/{{$item->id}}' } class="img-responsive"/></a></td>
+                <td class="col-md-1"><a href="#" class="pop"><img style="width:48px;height:42px;" id="imageresource" src='./item/{{$item->id}}' } class="img-responsive"/></a></td>
             </tr>
         @endforeach
         </tbody>

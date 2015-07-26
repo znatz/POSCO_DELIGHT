@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::post('/iosReceiver', "iosReceiver@index");
+Route::post('/iosReceiver2', "iosReceiver@index");
 
 Route::group(['before' => 'sentry'], function () {
     Route::resource('dataFromIOs', 'DataFromIOsController');
